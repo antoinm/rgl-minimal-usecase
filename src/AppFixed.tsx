@@ -29,24 +29,25 @@ const MyComponent: React.FC<MyComponentProps> = ({ text }) => {
   return <div>{text}</div>;
 };
 
-const App: React.FC = () => {
-  const [originalLayouts] = useState(storedLayout);
+const AppFixed: React.FC = () => {
+  const [originalLayouts, setOriginalLayouts] = useState(storedLayout);
   const [layouts, setLayouts] = useState<Layout[]>(storedLayout);
 
   const onLayoutChange = (newLayouts: Layout[]) => {
     setLayouts(newLayouts);
+  };
+  const onLayoutInit = (newLayouts: Layout[]) => {
+    setOriginalLayouts(newLayouts);
   };
 
   const isDashboardDirty = !isEqual(originalLayouts, layouts);
 
   return (
     <div style={{ flex: 1 }}>
-      <h1>Example with the issue</h1>
+      <h1>Example with the onLayoutInit Callback fixing the issue</h1>
       <p>
-        The grid layout is dirty without any user interaction, because there is
-        a difference between the stored layouts, and the widgets retrieved
-        remotely. (There is a newly added widget that does not have a layout
-        associated) A, B, C, D widgets have a layout associated, but E does not.
+        Once the layout has been auto-corrected, the onLayoutInit callback is
+        triggered, and will update the originalLayouts
       </p>
       <p>
         The dashboard layout{" "}
@@ -60,6 +61,7 @@ const App: React.FC = () => {
         className="layout"
         layouts={{ lg: layouts }}
         onLayoutChange={onLayoutChange}
+        onLayoutInit={onLayoutInit}
         cols={{ lg: 6, xs: 1, sm: 6 }}
       >
         {remotelyFetchedWidgets.map((w) => (
@@ -72,4 +74,4 @@ const App: React.FC = () => {
   );
 };
 
-export default App;
+export default AppFixed;
