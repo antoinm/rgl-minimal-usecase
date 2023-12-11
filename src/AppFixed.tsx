@@ -62,7 +62,7 @@ const AppFixed: React.FC = () => {
         layouts={{ lg: layouts }}
         onLayoutChange={onLayoutChange}
         onLayoutInit={onLayoutInit}
-        cols={{ lg: 6, xs: 1, sm: 6 }}
+        cols={{ lg: 6, xs: 1, sm: 6, xxs: 1 }}
       >
         {remotelyFetchedWidgets.map((w) => (
           <div key={w}>
